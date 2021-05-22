@@ -4,6 +4,8 @@ import { Card } from "antd";
 import { decodeGame, GameState } from "../utils/game";
 import { Character, DECK, getCardType } from "../utils/schema";
 
+import "../styles/game.css";
+
 interface GameProps {
   game: string;
   character: string;
@@ -24,13 +26,15 @@ export default function Game() {
   return (
     <>
       <h1>Character: {characterName}</h1>
-      {gameState !== null &&
-        characterName !== null &&
-        gameState.hands[characterName]!.map((card) => (
-          <Card style={{ width: "200px" }} title={getCardType(card)}>
-            {card}
-          </Card>
-        ))}
+      <div className="hand-grid">
+        {gameState !== null &&
+          characterName !== null &&
+          gameState.hands[characterName]!.map((card) => (
+            <Card style={{ width: "200px" }} title={getCardType(card)}>
+              {card}
+            </Card>
+          ))}
+      </div>
     </>
   );
 }

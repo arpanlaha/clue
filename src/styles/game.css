@@ -1,0 +1,8 @@
+.hand-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ant-card {
+  margin: 20px;
+}
