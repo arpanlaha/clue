@@ -34,6 +34,19 @@ export const ROOMS = [
 export type Room = typeof ROOMS[number];
 
 export type Card = Character | Weapon | Room;
+export type CardType = "Character" | "Weapon" | "Room";
+
+export function getCardType(card: Card): CardType {
+  if (CHARACTERS.includes(card as Character)) {
+    return "Character";
+  }
+
+  if (WEAPONS.includes(card as Weapon)) {
+    return "Weapon";
+  }
+
+  return "Room";
+}
 
 function generateNumbering(): Record<Card, number> {
   const numbering: Partial<Record<Card, number>> = {};
