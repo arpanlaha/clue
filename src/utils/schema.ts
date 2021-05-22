@@ -27,6 +27,7 @@ export const ROOMS = [
   "Dining Room",
   "Hall",
   "Kitchen",
+  "Lounge",
   "Library",
   "Study",
 ];
