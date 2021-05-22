@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Alert, Button, Card, Modal, Select } from "antd";
 import { decodeGame, GameState } from "../utils/game";
@@ -22,7 +22,7 @@ interface GameProps {
   character: string;
 }
 
-export default function Game() {
+export default function Game(): ReactElement {
   const { game, character } = useParams<GameProps>();
   const [gameState, setGameState] = useState<GameState | undefined>(undefined);
   const [modalVisible, setModalVisible] = useState(false);
@@ -43,7 +43,7 @@ export default function Game() {
     [character]
   );
 
-  function toggleModal() {
+  function toggleModal(): void {
     setModalVisible((visible) => !visible);
   }
 
@@ -77,7 +77,11 @@ export default function Game() {
         {gameState !== undefined &&
           characterName !== undefined &&
           gameState.hands[characterName]!.map((card) => (
-            <Card style={{ width: "200px" }} title={getCardType(card)}>
+            <Card
+              key={card}
+              style={{ width: "200px" }}
+              title={getCardType(card)}
+            >
               {card}
             </Card>
           ))}

@@ -1,14 +1,20 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Game, GameRoom, Home } from "./pages";
 
-function App() {
+function App(): ReactElement {
   return (
     <Router>
       <Switch>
-        <Route path="/:game/:character" children={<Game />} />
-        <Route path="/:game" children={<GameRoom />} />
-        <Route exact path="/" children={<Home />} />
+        <Route path="/:game/:character">
+          <Game />
+        </Route>
+        <Route path="/:game">
+          <GameRoom />
+        </Route>
+        <Route exact path="/">
+          <Home />
+        </Route>
       </Switch>
     </Router>
   );

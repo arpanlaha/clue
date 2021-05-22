@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, Select } from "antd";
 import { decodeGame, GameState } from "../utils/game";
@@ -10,7 +10,7 @@ interface GameRoomProps {
   game: string;
 }
 
-export default function Game() {
+export default function Game(): ReactElement {
   const [gameState, setGameState] = useState<GameState | undefined>(undefined);
   const [player, setPlayer] = useState<Character | undefined>(undefined);
   const { game } = useParams<GameRoomProps>();

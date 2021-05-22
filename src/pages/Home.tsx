@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactElement, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Select } from "antd";
 import { Character, CHARACTERS, MIN_PLAYERS } from "../utils/schema";
@@ -6,7 +6,7 @@ import { generateGameState, encodeGame } from "../utils/game";
 
 const { Option } = Select;
 
-export default function Home() {
+export default function Home(): ReactElement {
   const [players, setPlayers] = useState<Character[]>([]);
   const history = useHistory();
 
