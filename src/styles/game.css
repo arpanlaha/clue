@@ -6,3 +6,7 @@
 .ant-card {
   margin: 20px;
 }
+
+.ant-select {
+  width: 200px;
+}

@@ -11,7 +11,7 @@ interface GameRoomProps {
 }
 
 export default function Game() {
-  const [gameState, setGameState] = useState<GameState | null>(null);
+  const [gameState, setGameState] = useState<GameState | undefined>(undefined);
   const [player, setPlayer] = useState<Character | undefined>(undefined);
   const { game } = useParams<GameRoomProps>();
 
@@ -24,7 +24,7 @@ export default function Game() {
   return (
     <>
       <h1>Select your character:</h1>
-      {gameState !== null && (
+      {gameState !== undefined && (
         <Select
           placeholder="Select character..."
           allowClear
