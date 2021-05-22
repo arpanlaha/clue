@@ -2,15 +2,15 @@ import {
   Card,
   Character,
   CHARACTERS,
-  MAX_PLAYERS,
-  MIN_PLAYERS,
+  DECK,
+  NUMBERING,
   Room,
   ROOMS,
   Weapon,
   WEAPONS,
 } from "./schema";
 
-interface GameState {
+export interface GameState {
   murderCharacter: Character;
   murderWeapon: Weapon;
   murderRoom: Room;
@@ -18,12 +18,8 @@ interface GameState {
   players: Character[];
 }
 
-export function generateGameState(players: Character[]): GameState | null {
+export function generateGameState(players: Character[]): GameState {
   const numPlayers = players.length;
-
-  if (numPlayers < MIN_PLAYERS || numPlayers > MAX_PLAYERS) {
-    return null;
-  }
 
   const murderCharacter =
     CHARACTERS[Math.floor(Math.random() * CHARACTERS.length)];
@@ -60,12 +56,52 @@ export function generateGameState(players: Character[]): GameState | null {
   };
 }
 
+interface MinifiedGame {
+  c: number;
+  w: number;
+  r: number;
+  p: number[];
+  h: Record<number, number[]>;
+}
+
 export function encodeGame(game: GameState): string {
-  return atob(JSON.stringify(game));
+  const { murderCharacter, murderWeapon, murderRoom, hands, players } = game;
+
+  const minified: MinifiedGame = {
+    c: NUMBERING[murderCharacter],
+    w: NUMBERING[murderWeapon],
+    r: NUMBERING[murderRoom],
+    p: players.map((player) => NUMBERING[player]),
+    h: {},
+  };
+
+  players.forEach((player) => {
+    minified.h[NUMBERING[player]] = hands[player]!.map(
+      (card) => NUMBERING[card]
+    );
+  });
+
+  return btoa(JSON.stringify(minified));
 }
 
 export function decodeGame(gameEncoding: string): GameState {
-  return JSON.parse(btoa(gameEncoding));
+  const minified: MinifiedGame = JSON.parse(atob(gameEncoding));
+
+  const { c, w, r, p, h } = minified;
+
+  const players = p.map((playerNumber) => DECK[playerNumber] as Character);
+  const hands: Partial<Record<Character, Card[]>> = {};
+  players.map(
+    (player) => (hands[player] = h[NUMBERING[player]].map((card) => DECK[card]))
+  );
+
+  return {
+    murderCharacter: DECK[c] as Character,
+    murderWeapon: DECK[w] as Weapon,
+    murderRoom: DECK[r] as Room,
+    players,
+    hands,
+  };
 }
 
 // Function copied from https://stackoverflow.com/a/12646864

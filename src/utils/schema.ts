@@ -35,5 +35,26 @@ export type Room = typeof ROOMS[number];
 
 export type Card = Character | Weapon | Room;
 
+function generateNumbering(): Record<Card, number> {
+  const numbering: Partial<Record<Card, number>> = {};
+
+  CHARACTERS.forEach((character, index) => (numbering[character] = index));
+  WEAPONS.forEach(
+    (weapon, index) => (numbering[weapon] = index + CHARACTERS.length)
+  );
+  ROOMS.forEach(
+    (room, index) =>
+      (numbering[room] = index + CHARACTERS.length + WEAPONS.length)
+  );
+
+  return numbering as Record<Card, number>;
+}
+
+export const NUMBERING: Record<Card, number> = generateNumbering();
+
+export const DECK: Card[] = (CHARACTERS.slice() as Card[])
+  .concat(WEAPONS.slice() as Card[])
+  .concat(ROOMS.slice() as Card[]);
+
 export const MIN_PLAYERS = 3;
 export const MAX_PLAYERS = CHARACTERS.length;
