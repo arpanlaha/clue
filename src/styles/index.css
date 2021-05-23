@@ -9,7 +9,41 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+@media (orientation: portrait) {
+  .ant-layout-header {
+    height: 10em;
+  }
+
+  h1 {
+    font-size: 5em;
+  }
+
+  h2 {
+    font-size: 3em;
+  }
+
+  h3 {
+    font-size: 2em;
+  }
+
+  h4 {
+    font-size: 1.5em;
+  }
+}
+
+.ant-layout-header {
+  background-color: #0f428a;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.ant-layout-header h1 {
+  color: #fff;
+  margin: 0;
+}
+
+.ant-layout-content {
+  background-color: #fff;
+  padding: 40px 200px;
 }

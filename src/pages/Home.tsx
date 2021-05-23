@@ -24,7 +24,6 @@ export default function Home(): ReactElement {
 
   return (
     <>
-      <h1>Clue</h1>
       <h2>Select players below:</h2>
       <Select
         mode="multiple"
