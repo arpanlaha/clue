@@ -77,11 +77,7 @@ export default function Game(): ReactElement {
         {gameState !== undefined &&
           characterName !== undefined &&
           gameState.hands[characterName]!.map((card) => (
-            <Card
-              key={card}
-              style={{ width: "200px" }}
-              title={getCardType(card)}
-            >
+            <Card key={card} title={getCardType(card)}>
               {card}
             </Card>
           ))}

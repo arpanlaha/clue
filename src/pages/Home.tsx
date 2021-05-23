@@ -4,6 +4,8 @@ import { Button, Select } from "antd";
 import { Character, CHARACTERS, MIN_PLAYERS } from "../utils/schema";
 import { generateGameState, encodeGame } from "../utils/game";
 
+import "../styles/home.css";
+
 const { Option } = Select;
 
 export default function Home(): ReactElement {
@@ -28,7 +30,6 @@ export default function Home(): ReactElement {
         mode="multiple"
         allowClear
         placeholder="Select characters..."
-        style={{ width: "500px" }}
         onChange={handleSelect}
       >
         {CHARACTERS.map((character) => (

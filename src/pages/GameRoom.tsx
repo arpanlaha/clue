@@ -4,6 +4,8 @@ import { Button, Select } from "antd";
 import { decodeGame, GameState } from "../utils/game";
 import { Character, NUMBERING } from "../utils/schema";
 
+import "../styles/game-room.css";
+
 const { Option } = Select;
 
 interface GameRoomProps {
@@ -28,7 +30,6 @@ export default function Game(): ReactElement {
         <Select
           placeholder="Select character..."
           allowClear
-          style={{ width: "200px" }}
           onChange={handleSelect}
         >
           {gameState.players.map((character) => (
