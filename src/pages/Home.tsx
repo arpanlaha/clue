@@ -1,12 +1,15 @@
 import React, { ReactElement, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Select } from "antd";
-import { Character, CHARACTERS, MIN_PLAYERS } from "../utils/schema";
+import { Button, Checkbox, CheckboxGroup, HStack } from "@chakra-ui/react";
+import {
+  Character,
+  CHARACTERS,
+  CHARACTER_TO_COLOR,
+  MIN_PLAYERS,
+} from "../utils/schema";
 import { generateGameState, encodeGame } from "../utils/game";
 
 import "../styles/home.css";
-
-const { Option } = Select;
 
 export default function Home(): ReactElement {
   const [players, setPlayers] = useState<Character[]>([]);
@@ -25,20 +28,22 @@ export default function Home(): ReactElement {
   return (
     <>
       <h2>Select players below:</h2>
-      <Select
-        mode="multiple"
-        allowClear
-        placeholder="Select characters..."
-        onChange={handleSelect}
-      >
-        {CHARACTERS.map((character) => (
-          <Option key={character} value={character}>
-            {character}
-          </Option>
-        ))}
-      </Select>
+      <CheckboxGroup onChange={handleSelect as any}>
+        <HStack>
+          {CHARACTERS.map((character) => (
+            <Checkbox
+              key={character}
+              value={character}
+              colorScheme={CHARACTER_TO_COLOR[character]}
+            >
+              {character}
+            </Checkbox>
+          ))}
+        </HStack>
+      </CheckboxGroup>
+
       <Button
-        type="primary"
+        colorScheme="blue"
         onClick={handleGenerate}
         disabled={players.length < MIN_PLAYERS}
       >

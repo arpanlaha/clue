@@ -72,3 +72,12 @@ export const DECK: Card[] = (CHARACTERS.slice() as Card[])
 
 export const MIN_PLAYERS = 3;
 export const MAX_PLAYERS = CHARACTERS.length;
+
+export const CHARACTER_TO_COLOR: Record<Character, string> = {
+  Green: "green",
+  Mustard: "yellow",
+  Orchid: "pink",
+  Peacock: "blue",
+  Plum: "purple",
+  Scarlett: "red",
+};
