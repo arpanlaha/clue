@@ -1,3 +1,7 @@
-.ant-select {
-  width: 500px;
+.chakra-container {
+  padding: 40px 0;
+}
+
+.character-grid {
+  margin: 20px 0;
 }
