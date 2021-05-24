@@ -1,12 +1,10 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, Select } from "antd";
+import { Button, Select } from "@chakra-ui/react";
 import { decodeGame, GameState } from "../utils/game";
 import { Character, NUMBERING } from "../utils/schema";
 
 import "../styles/game-room.css";
-
-const { Option } = Select;
 
 interface GameRoomProps {
   game: string;
@@ -19,32 +17,28 @@ export default function Game(): ReactElement {
 
   useEffect(() => setGameState(decodeGame(game)), [game]);
 
-  function handleSelect(player: Character | undefined): void {
-    setPlayer(player);
+  function handleSelect(e: ChangeEvent<HTMLSelectElement>): void {
+    setPlayer(e.target.value as Character);
   }
 
   return (
     <>
       <h1>Select your character:</h1>
       {gameState !== undefined && (
-        <Select
-          placeholder="Select character..."
-          allowClear
-          onChange={handleSelect}
-        >
+        <Select placeholder="Select character..." onChange={handleSelect}>
           {gameState.players.map((character) => (
-            <Option key={character} value={character}>
+            <option key={character} value={character}>
               {character}
-            </Option>
+            </option>
           ))}
         </Select>
       )}
 
-      <Button type="primary" disabled={player === undefined}>
-        <Link to={`${game}/${player !== undefined ? NUMBERING[player] : ""}`}>
+      <Link to={`${game}/${player !== undefined ? NUMBERING[player] : ""}`}>
+        <Button colorScheme="blue" disabled={player === undefined}>
           Select
-        </Link>
-      </Button>
+        </Button>
+      </Link>
     </>
   );
 }

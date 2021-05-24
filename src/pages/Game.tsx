@@ -1,6 +1,18 @@
-import React, { ReactElement, useEffect, useState } from "react";
+import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Alert, Button, Card, Modal, Select } from "antd";
+import {
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Select,
+  ModalFooter,
+} from "@chakra-ui/react";
+import { Card } from "../components";
 import { decodeGame, GameState } from "../utils/game";
 import {
   Character,
@@ -15,8 +27,6 @@ import {
 
 import "../styles/game.css";
 
-const { Option } = Select;
-
 interface GameProps {
   game: string;
   character: string;
@@ -25,7 +35,7 @@ interface GameProps {
 export default function Game(): ReactElement {
   const { game, character } = useParams<GameProps>();
   const [gameState, setGameState] = useState<GameState | undefined>(undefined);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
   const [characterName, setCharacterName] =
     useState<Character | undefined>(undefined);
   const [accusedCharacter, setAccusedCharacter] =
@@ -44,19 +54,19 @@ export default function Game(): ReactElement {
   );
 
   function toggleModal(): void {
-    setModalVisible((visible) => !visible);
+    setModalOpen((visible) => !visible);
   }
 
-  function handleAccuseCharacter(character: Character | undefined): void {
-    setAccusedCharacter(character);
+  function handleAccuseCharacter(e: ChangeEvent<HTMLSelectElement>): void {
+    setAccusedCharacter(e.target.value as Character);
   }
 
-  function handleAccuseWeapon(weapon: Weapon | undefined): void {
-    setAccusedWeapon(weapon);
+  function handleAccuseWeapon(e: ChangeEvent<HTMLSelectElement>): void {
+    setAccusedWeapon(e.target.value as Weapon);
   }
 
-  function handleAccuseRoom(room: Room | undefined): void {
-    setAccusedRoom(room);
+  function handleAccuseRoom(e: ChangeEvent<HTMLSelectElement>): void {
+    setAccusedRoom(e.target.value as Room);
   }
 
   function handleAccusation(): void {
@@ -77,25 +87,68 @@ export default function Game(): ReactElement {
         {gameState !== undefined &&
           characterName !== undefined &&
           gameState.hands[characterName]!.map((card) => (
-            <Card key={card} title={getCardType(card)}>
+            <Card key={card}>
+              <h4>{getCardType(card)}</h4>
               {card}
             </Card>
           ))}
       </div>
-      <Button type="primary" onClick={toggleModal}>
+      <Button colorScheme="blue" onClick={toggleModal}>
         Submit Final Accusation
       </Button>
-      <Modal
-        title="Final Accusation"
-        visible={modalVisible}
-        onCancel={toggleModal}
-        footer={[
-          <Button key="back" danger onClick={toggleModal}>
+      <Modal isOpen={modalOpen} onClose={toggleModal}>
+        <ModalOverlay />
+        <ModalHeader>Final Accusation</ModalHeader>
+        <ModalContent>
+          {accusationSuccess === undefined ? (
+            <>
+              <h4>Murderer:</h4>
+              <Select allowClear onChange={handleAccuseCharacter}>
+                {CHARACTERS.map((character) => (
+                  <option key={character} value={character}>
+                    {character}
+                  </option>
+                ))}
+              </Select>
+              <h4>Murder weapon:</h4>
+              <Select allowClear onChange={handleAccuseWeapon}>
+                {WEAPONS.map((weapon) => (
+                  <option key={weapon} value={weapon}>
+                    {weapon}
+                  </option>
+                ))}
+              </Select>
+              <h4>Murder location</h4>
+              <Select allowClear onChange={handleAccuseRoom}>
+                {ROOMS.map((room) => (
+                  <option key={room} value={room}>
+                    {room}
+                  </option>
+                ))}
+              </Select>
+            </>
+          ) : (
+            <>
+              <h3>Your Accusation:</h3>
+              <h4>Murderer: {accusedCharacter}</h4>
+              <h4>Murder Weapon: {accusedWeapon}</h4>
+              <h4>Murder Location: {accusedRoom}</h4>
+              <Alert status={accusationSuccess ? "success" : "error"}>
+                <AlertIcon />
+                <AlertTitle>
+                  {accusationSuccess ? "Correct!" : "Incorrect!"}
+                </AlertTitle>
+              </Alert>
+            </>
+          )}
+        </ModalContent>
+        <ModalFooter>
+          <Button key="back" colorScheme="red" onClick={toggleModal}>
             Exit
-          </Button>,
+          </Button>
           <Button
             key="submit"
-            type="primary"
+            colorScheme="blue"
             onClick={handleAccusation}
             disabled={
               accusedCharacter === undefined ||
@@ -105,48 +158,8 @@ export default function Game(): ReactElement {
             }
           >
             Accuse
-          </Button>,
-        ]}
-      >
-        {accusationSuccess === undefined ? (
-          <>
-            <h4>Murderer:</h4>
-            <Select allowClear onChange={handleAccuseCharacter}>
-              {CHARACTERS.map((character) => (
-                <Option key={character} value={character}>
-                  {character}
-                </Option>
-              ))}
-            </Select>
-            <h4>Murder weapon:</h4>
-            <Select allowClear onChange={handleAccuseWeapon}>
-              {WEAPONS.map((weapon) => (
-                <Option key={weapon} value={weapon}>
-                  {weapon}
-                </Option>
-              ))}
-            </Select>
-            <h4>Murder location</h4>
-            <Select allowClear onChange={handleAccuseRoom}>
-              {ROOMS.map((room) => (
-                <Option key={room} value={room}>
-                  {room}
-                </Option>
-              ))}
-            </Select>
-          </>
-        ) : (
-          <>
-            <h3>Your Accusation:</h3>
-            <h4>Murderer: {accusedCharacter}</h4>
-            <h4>Murder Weapon: {accusedWeapon}</h4>
-            <h4>Murder Location: {accusedRoom}</h4>
-            <Alert
-              type={accusationSuccess ? "success" : "error"}
-              message={accusationSuccess ? "Correct!" : "Incorrect!"}
-            />
-          </>
-        )}
+          </Button>
+        </ModalFooter>
       </Modal>
     </>
   );

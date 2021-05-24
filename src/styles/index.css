@@ -1,5 +1,3 @@
-@import "~antd/dist/antd.css";
-
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -29,21 +27,4 @@ body {
   h4 {
     font-size: 1.5em;
   }
-}
-
-.ant-layout-header {
-  background-color: #0f428a;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.ant-layout-header h1 {
-  color: #fff;
-  margin: 0;
-}
-
-.ant-layout-content {
-  background-color: #fff;
-  padding: 40px 200px;
 }
