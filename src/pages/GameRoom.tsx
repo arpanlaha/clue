@@ -1,6 +1,7 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, Select } from "@chakra-ui/react";
+import { Button, Heading } from "@chakra-ui/react";
+import { Select } from "../components";
 import { decodeGame, GameState } from "../utils/game";
 import { Character, NUMBERING } from "../utils/schema";
 
@@ -23,15 +24,15 @@ export default function Game(): ReactElement {
 
   return (
     <>
-      <h1>Select your character:</h1>
+      <Heading as="h2" size="md">
+        Select your character:
+      </Heading>
       {gameState !== undefined && (
-        <Select placeholder="Select character..." onChange={handleSelect}>
-          {gameState.players.map((character) => (
-            <option key={character} value={character}>
-              {character}
-            </option>
-          ))}
-        </Select>
+        <Select
+          placeholder="Select character..."
+          onChange={handleSelect}
+          options={gameState.players}
+        />
       )}
 
       <Link to={`${game}/${player !== undefined ? NUMBERING[player] : ""}`}>

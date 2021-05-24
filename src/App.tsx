@@ -1,15 +1,12 @@
 import React, { ReactElement } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { NavBar } from "./components";
 import { Game, GameRoom, Home } from "./pages";
 
 function App(): ReactElement {
   return (
     <>
-      <nav>
-        <a href="/">
-          <h1>Clue</h1>
-        </a>
-      </nav>
+      <NavBar />
       <Router>
         <Switch>
           <Route path="/:game/:character">

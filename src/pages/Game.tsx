@@ -5,14 +5,16 @@ import {
   AlertIcon,
   AlertTitle,
   Button,
+  Heading,
   Modal,
+  ModalBody,
   ModalContent,
   ModalHeader,
   ModalOverlay,
-  Select,
   ModalFooter,
+  Text,
 } from "@chakra-ui/react";
-import { Card } from "../components";
+import { Card, Select } from "../components";
 import { decodeGame, GameState } from "../utils/game";
 import {
   Character,
@@ -82,14 +84,18 @@ export default function Game(): ReactElement {
 
   return (
     <>
-      <h1>Character: {characterName}</h1>
+      <Heading as="h2" size="md">
+        Character: {characterName}
+      </Heading>
       <div className="hand-grid">
         {gameState !== undefined &&
           characterName !== undefined &&
           gameState.hands[characterName]!.map((card) => (
             <Card key={card}>
-              <h4>{getCardType(card)}</h4>
-              {card}
+              <Heading as="h3" size="sm">
+                {getCardType(card)}
+              </Heading>
+              <Text>{card}</Text>
             </Card>
           ))}
       </div>
@@ -98,68 +104,78 @@ export default function Game(): ReactElement {
       </Button>
       <Modal isOpen={modalOpen} onClose={toggleModal}>
         <ModalOverlay />
-        <ModalHeader>Final Accusation</ModalHeader>
         <ModalContent>
-          {accusationSuccess === undefined ? (
-            <>
-              <h4>Murderer:</h4>
-              <Select allowClear onChange={handleAccuseCharacter}>
-                {CHARACTERS.map((character) => (
-                  <option key={character} value={character}>
-                    {character}
-                  </option>
-                ))}
-              </Select>
-              <h4>Murder weapon:</h4>
-              <Select allowClear onChange={handleAccuseWeapon}>
-                {WEAPONS.map((weapon) => (
-                  <option key={weapon} value={weapon}>
-                    {weapon}
-                  </option>
-                ))}
-              </Select>
-              <h4>Murder location</h4>
-              <Select allowClear onChange={handleAccuseRoom}>
-                {ROOMS.map((room) => (
-                  <option key={room} value={room}>
-                    {room}
-                  </option>
-                ))}
-              </Select>
-            </>
-          ) : (
-            <>
-              <h3>Your Accusation:</h3>
-              <h4>Murderer: {accusedCharacter}</h4>
-              <h4>Murder Weapon: {accusedWeapon}</h4>
-              <h4>Murder Location: {accusedRoom}</h4>
-              <Alert status={accusationSuccess ? "success" : "error"}>
-                <AlertIcon />
-                <AlertTitle>
-                  {accusationSuccess ? "Correct!" : "Incorrect!"}
-                </AlertTitle>
-              </Alert>
-            </>
-          )}
+          <ModalHeader>Final Accusation</ModalHeader>
+          <ModalBody>
+            {accusationSuccess === undefined ? (
+              <>
+                <Heading as="h3" size="sm">
+                  Murderer:
+                </Heading>
+                <Select
+                  onChange={handleAccuseCharacter}
+                  placeholder="Pick a character..."
+                  options={CHARACTERS}
+                />
+                <Heading as="h3" size="sm">
+                  Murder Weapon:
+                </Heading>
+                <Select
+                  onChange={handleAccuseWeapon}
+                  placeholder="Pick a weapon..."
+                  options={WEAPONS}
+                />
+                <Heading as="h3" size="sm">
+                  Murder Location:
+                </Heading>
+                <Select
+                  onChange={handleAccuseRoom}
+                  placeholder="Pick a room..."
+                  options={ROOMS}
+                />
+              </>
+            ) : (
+              <>
+                <Heading as="h3" size="sm">
+                  Your Accusation:
+                </Heading>
+                <Heading as="h3" size="sm">
+                  Murderer: {accusedCharacter}
+                </Heading>
+                <Heading as="h3" size="sm">
+                  Murder Weapon: {accusedWeapon}
+                </Heading>
+                <Heading as="h3" size="sm">
+                  Murder Location: {accusedRoom}
+                </Heading>
+                <Alert status={accusationSuccess ? "success" : "error"}>
+                  <AlertIcon />
+                  <AlertTitle>
+                    {accusationSuccess ? "Correct!" : "Incorrect!"}
+                  </AlertTitle>
+                </Alert>
+              </>
+            )}
+          </ModalBody>
+          <ModalFooter>
+            <Button key="back" colorScheme="red" onClick={toggleModal}>
+              Exit
+            </Button>
+            <Button
+              key="submit"
+              colorScheme="blue"
+              onClick={handleAccusation}
+              disabled={
+                accusedCharacter === undefined ||
+                accusedWeapon === undefined ||
+                accusedRoom === undefined ||
+                accusationSuccess === false
+              }
+            >
+              Accuse
+            </Button>
+          </ModalFooter>
         </ModalContent>
-        <ModalFooter>
-          <Button key="back" colorScheme="red" onClick={toggleModal}>
-            Exit
-          </Button>
-          <Button
-            key="submit"
-            colorScheme="blue"
-            onClick={handleAccusation}
-            disabled={
-              accusedCharacter === undefined ||
-              accusedWeapon === undefined ||
-              accusedRoom === undefined ||
-              accusationSuccess === false
-            }
-          >
-            Accuse
-          </Button>
-        </ModalFooter>
       </Modal>
     </>
   );

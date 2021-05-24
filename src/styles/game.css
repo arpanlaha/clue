@@ -2,12 +2,3 @@
   display: flex;
   flex-wrap: wrap;
 }
-
-.ant-card {
-  margin: 20px;
-  width: 200px;
-}
-
-.ant-select {
-  width: 200px;
-}

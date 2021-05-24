@@ -1,6 +1,12 @@
 import React, { ReactElement, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Checkbox, CheckboxGroup, HStack } from "@chakra-ui/react";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  Heading,
+  HStack,
+} from "@chakra-ui/react";
 import {
   Character,
   CHARACTERS,
@@ -27,7 +33,9 @@ export default function Home(): ReactElement {
 
   return (
     <>
-      <h2>Select players below:</h2>
+      <Heading as="h2" size="md">
+        Select players below:
+      </Heading>
       <CheckboxGroup onChange={handleSelect as any}>
         <HStack>
           {CHARACTERS.map((character) => (
