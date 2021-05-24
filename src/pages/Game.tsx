@@ -4,6 +4,7 @@ import {
   Alert,
   AlertIcon,
   AlertTitle,
+  Container,
   Button,
   Heading,
   Modal,
@@ -12,6 +13,7 @@ import {
   ModalHeader,
   ModalOverlay,
   ModalFooter,
+  SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { Card, Select } from "../components";
@@ -83,11 +85,11 @@ export default function Game(): ReactElement {
   }
 
   return (
-    <>
+    <Container maxW="container.md">
       <Heading as="h2" size="md">
         Character: {characterName}
       </Heading>
-      <div className="hand-grid">
+      <SimpleGrid className="hand-grid" columns={3} spacing={2}>
         {gameState !== undefined &&
           characterName !== undefined &&
           gameState.hands[characterName]!.map((card) => (
@@ -98,7 +100,7 @@ export default function Game(): ReactElement {
               <Text>{card}</Text>
             </Card>
           ))}
-      </div>
+      </SimpleGrid>
       <Button colorScheme="blue" onClick={toggleModal}>
         Submit Final Accusation
       </Button>
@@ -158,10 +160,16 @@ export default function Game(): ReactElement {
             )}
           </ModalBody>
           <ModalFooter>
-            <Button key="back" colorScheme="red" onClick={toggleModal}>
+            <Button
+              className="modal-button"
+              key="back"
+              colorScheme="red"
+              onClick={toggleModal}
+            >
               Exit
             </Button>
             <Button
+              className="modal-button"
               key="submit"
               colorScheme="blue"
               onClick={handleAccusation}
@@ -177,6 +185,6 @@ export default function Game(): ReactElement {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </Container>
   );
 }

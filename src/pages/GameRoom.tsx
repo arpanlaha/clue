@@ -1,11 +1,9 @@
 import React, { ChangeEvent, ReactElement, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, Heading } from "@chakra-ui/react";
+import { Button, Container, Heading } from "@chakra-ui/react";
 import { Select } from "../components";
 import { decodeGame, GameState } from "../utils/game";
 import { Character, NUMBERING } from "../utils/schema";
-
-import "../styles/game-room.css";
 
 interface GameRoomProps {
   game: string;
@@ -23,7 +21,7 @@ export default function Game(): ReactElement {
   }
 
   return (
-    <>
+    <Container maxW="container.md">
       <Heading as="h2" size="md">
         Select your character:
       </Heading>
@@ -40,6 +38,6 @@ export default function Game(): ReactElement {
           Select
         </Button>
       </Link>
-    </>
+    </Container>
   );
 }
