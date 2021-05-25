@@ -3,7 +3,7 @@ import { Heading, HStack, Switch, useColorMode } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 export default function NavBar(): ReactElement {
-  const { toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <nav>
@@ -12,7 +12,7 @@ export default function NavBar(): ReactElement {
       </a>
       <HStack>
         <SunIcon />
-        <Switch onChange={toggleColorMode} />
+        <Switch isChecked={colorMode === "dark"} onChange={toggleColorMode} />
         <MoonIcon />
       </HStack>
     </nav>
