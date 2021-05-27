@@ -10,7 +10,6 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "antd": "^4.15.6",
     "framer-motion": "^4.1.17",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -41,7 +40,7 @@
     ]
   },
   "devDependencies": {
-    "@hack4impact-uiuc/eslint-plugin": "^2.0.10",
+    "@hack4impact-uiuc/eslint-plugin": "^2.0.11",
     "@types/react-router-dom": "^5.1.7",
     "eslint": "^7.27.0",
     "prettier": "^2.3.0",
