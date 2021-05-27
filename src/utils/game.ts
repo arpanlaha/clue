@@ -38,6 +38,7 @@ export function generateGameState(players: Character[]): GameState {
 
   const deck = validCharacters.concat(validWeapons).concat(validRooms);
   shuffleArray(deck);
+  shuffleArray(players);
 
   const hands: Partial<Record<Character, Card[]>> = {};
   players.forEach(
