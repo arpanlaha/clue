@@ -1,10 +1,10 @@
 export const CHARACTERS = [
-  "Green",
-  "Mustard",
-  "Orchid",
-  "Peacock",
-  "Plum",
   "Scarlett",
+  "Mustard",
+  "Peacock",
+  "Green",
+  "Orchid",
+  "Plum",
 ] as const;
 
 export type Character = typeof CHARACTERS[number];
