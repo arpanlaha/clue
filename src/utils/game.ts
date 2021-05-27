@@ -112,10 +112,27 @@ function shuffleArray<T>(array: T[]): void {
   }
 }
 
+function rollDie(sides: number): number {
+  return Math.ceil(Math.random() * sides);
+}
+
 export function rollDice(): number {
   return rollDie(6) + rollDie(6);
 }
 
-function rollDie(sides: number): number {
-  return Math.ceil(Math.random() * sides);
+export interface Accusation {
+  accusedCharacter: Character;
+  accusedWeapon: Weapon;
+  accusedRoom: Room;
+}
+
+export function accuse(accusation: Accusation, gameState: GameState): boolean {
+  const { accusedCharacter, accusedWeapon, accusedRoom } = accusation;
+  const { murderCharacter, murderWeapon, murderRoom } = gameState;
+
+  return (
+    accusedCharacter === murderCharacter &&
+    accusedWeapon === murderWeapon &&
+    accusedRoom === murderRoom
+  );
 }

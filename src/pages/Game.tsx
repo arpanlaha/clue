@@ -18,7 +18,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Card, Select } from "../components";
-import { decodeGame, GameState, rollDice } from "../utils/game";
+import { accuse, decodeGame, GameState, rollDice } from "../utils/game";
 import {
   Character,
   CHARACTERS,
@@ -85,13 +85,15 @@ export default function Game(): ReactElement {
   }
 
   function handleAccusation(): void {
-    if (gameState !== undefined) {
-      const { murderCharacter, murderWeapon, murderRoom } = gameState;
-      setAccusationSuccess(
-        accusedCharacter === murderCharacter &&
-          accusedWeapon === murderWeapon &&
-          accusedRoom === murderRoom
-      );
+    if (
+      gameState !== undefined &&
+      accusedCharacter !== undefined &&
+      accusedWeapon !== undefined &&
+      accusedRoom !== undefined
+    ) {
+      const accusation = { accusedCharacter, accusedWeapon, accusedRoom };
+
+      setAccusationSuccess(accuse(accusation, gameState));
     }
   }
 
