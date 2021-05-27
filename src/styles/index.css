@@ -16,3 +16,14 @@ nav {
   align-items: center;
   padding: 1em 2em;
 }
+
+nav img {
+  height: 40px;
+  margin-left: 20px;
+  transition: opacity 0.2s;
+}
+
+nav img:hover {
+  opacity: 80%;
+  transition: opacity 0.2s;
+}

@@ -14,6 +14,13 @@ export default function NavBar(): ReactElement {
         <SunIcon />
         <Switch isChecked={colorMode === "dark"} onChange={toggleColorMode} />
         <MoonIcon />
+        <a
+          href="https://github.com/arpanlaha/clue"
+          target="_blank"
+          rel="noreferrer noopener"
+        >
+          <img src="/github.svg" alt="GitHub logo" />
+        </a>
       </HStack>
     </nav>
   );
