@@ -48,6 +48,8 @@ export function generateGameState(players: Character[]): GameState {
       ))
   );
 
+  players.sort((playerA, playerB) => NUMBERING[playerA] - NUMBERING[playerB]);
+
   return {
     murderCharacter,
     murderWeapon,
