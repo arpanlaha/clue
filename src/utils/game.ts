@@ -111,3 +111,11 @@ function shuffleArray<T>(array: T[]): void {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
+export function rollDice(): number {
+  return rollDie(6) + rollDie(6);
+}
+
+function rollDie(sides: number): number {
+  return Math.ceil(Math.random() * sides);
+}
