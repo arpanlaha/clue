@@ -15,9 +15,10 @@ import {
   ModalFooter,
   SimpleGrid,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import { Card, Select } from "../components";
-import { decodeGame, GameState } from "../utils/game";
+import { decodeGame, GameState, rollDice } from "../utils/game";
 import {
   Character,
   CHARACTERS,
@@ -49,6 +50,7 @@ export default function Game(): ReactElement {
   const [accusedRoom, setAccusedRoom] = useState<Room | undefined>(undefined);
   const [accusationSuccess, setAccusationSuccess] =
     useState<boolean | undefined>(undefined);
+  const toast = useToast();
 
   useEffect(() => setGameState(decodeGame(game)), [game]);
 
@@ -56,6 +58,15 @@ export default function Game(): ReactElement {
     () => setCharacterName(DECK[parseInt(character)] as Character),
     [character]
   );
+
+  function handleRoll(): void {
+    toast.closeAll();
+    toast({
+      title: `You rolled a ${rollDice()}!`,
+      duration: null,
+      isClosable: true,
+    });
+  }
 
   function toggleModal(): void {
     setModalOpen((visible) => !visible);
@@ -101,7 +112,10 @@ export default function Game(): ReactElement {
             </Card>
           ))}
       </SimpleGrid>
-      <Button colorScheme="blue" onClick={toggleModal}>
+      <Button colorScheme="blue" onClick={handleRoll}>
+        Roll Dice
+      </Button>
+      <Button colorScheme="red" onClick={toggleModal}>
         Submit Final Accusation
       </Button>
       <Modal isOpen={modalOpen} onClose={toggleModal}>
