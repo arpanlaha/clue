@@ -157,15 +157,9 @@ export default function Game(): ReactElement {
                 <Heading as="h3" size="sm">
                   Your Accusation:
                 </Heading>
-                <Heading as="h3" size="sm">
-                  Murderer: {accusedCharacter}
-                </Heading>
-                <Heading as="h3" size="sm">
-                  Murder Weapon: {accusedWeapon}
-                </Heading>
-                <Heading as="h3" size="sm">
-                  Murder Location: {accusedRoom}
-                </Heading>
+                <Text>Murderer: {accusedCharacter}</Text>
+                <Text>Murder Weapon: {accusedWeapon}</Text>
+                <Text>Murder Location: {accusedRoom}</Text>
                 <Alert status={accusationSuccess ? "success" : "error"}>
                   <AlertIcon />
                   <AlertTitle>
